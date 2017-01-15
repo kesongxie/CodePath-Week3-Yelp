@@ -2,8 +2,8 @@
 //  BusinessTableViewCell.swift
 //  Yelp
 //
-//  Created by Xie kesong on 1/14/17.
-//  Copyright © 2017 Timothy Lee. All rights reserved.
+//  Created by Xie Kesong on 1/14/17.
+//  Copyright © 2017  Xie Kesong. All rights reserved.
 //
 
 import UIKit
@@ -12,7 +12,6 @@ import UIKit
 
 class BusinessTableViewCell: UITableViewCell {
 
-  
     var business: Business!{
         didSet{
             self.bussinessImageView.loadBusinessImage(business: self.business)

@@ -2,14 +2,16 @@
 //  BusinessesViewController.swift
 //  Yelp
 //
-//  Created by Timothy Lee on 4/23/15.
-//  Copyright (c) 2015 Timothy Lee. All rights reserved.
+//  Created by Xie Kesong on 1/14/17.
+//  Copyright © 2017  Xie Kesong. All rights reserved.
 //
 
 import UIKit
 
 fileprivate let reuseIden = "BusinessCell"
 fileprivate let showMapSegueIden = "ShowMap"
+fileprivate let showDetailSegueIden = "ShowDetail"
+
 
 class BusinessesViewController: UIViewController {
     
@@ -105,7 +107,6 @@ class BusinessesViewController: UIViewController {
             }else{
                 self.loadingFooterView.isHidden = true
             }
-
         }
     }
     
@@ -135,6 +136,10 @@ class BusinessesViewController: UIViewController {
             if let mapVC = segue.destination as? MapViewController{
                 mapVC.businesses = self.businesses
             }
+        }else if segue.identifier == showDetailSegueIden{
+            if let detailVc = segue.destination as? DetailViewController{
+                detailVc.business = self.businesses![self.tableView.indexPathForSelectedRow!.row]
+            }
         }
     }
 
@@ -163,7 +168,6 @@ extension BusinessesViewController: UISearchBarDelegate{
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.navigationItem.rightBarButtonItem = nil
         searchBar.setShowsCancelButton(true, animated: true)
-
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
