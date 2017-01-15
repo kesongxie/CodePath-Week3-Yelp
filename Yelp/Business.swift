@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class Business: NSObject {
     let name: String?
@@ -16,6 +17,7 @@ class Business: NSObject {
     let distance: String?
     let ratingImageURL: URL?
     let reviewCount: NSNumber?
+    let location: CLLocation?
     
     init(dictionary: NSDictionary) {
         name = dictionary["name"] as? String
@@ -27,15 +29,19 @@ class Business: NSObject {
             imageURL = nil
         }
         
-        let location = dictionary["location"] as? NSDictionary
         var address = ""
-        if location != nil {
-            let addressArray = location!["address"] as? NSArray
+        var latitude: CLLocationDegrees = 0
+        var longitude: CLLocationDegrees = 0
+
+        if let location = dictionary["location"] as? NSDictionary, let coordinate = location["coordinate"] as? NSDictionary{
+            latitude  = (coordinate["latitude"] as? Double)!
+            longitude = (coordinate["longitude"] as? Double)!
+            let addressArray = location["address"] as? NSArray
             if addressArray != nil && addressArray!.count > 0 {
                 address = addressArray![0] as! String
             }
             
-            let neighborhoods = location!["neighborhoods"] as? NSArray
+            let neighborhoods = location["neighborhoods"] as? NSArray
             if neighborhoods != nil && neighborhoods!.count > 0 {
                 if !address.isEmpty {
                     address += ", "
@@ -43,6 +49,7 @@ class Business: NSObject {
                 address += neighborhoods![0] as! String
             }
         }
+        self.location = CLLocation(latitude: latitude, longitude: longitude)
         self.address = address
         
         let categoriesArray = dictionary["categories"] as? [[String]]
@@ -85,16 +92,10 @@ class Business: NSObject {
     }
     
     class func searchWithTerm(term: String, offset: Int?, limit: Int?, completion: @escaping ([Business]?, Error?) -> Void) {
-        print("the offset is \(offset)")
         _ = YelpClient.sharedInstance.searchWithTerm(term, offset: offset, limit: limit, completion: completion)
     }
     
     class func searchWithTerm(term: String, sort: YelpSortMode?, categories: [String]?, deals: Bool?, completion: @escaping ([Business]?, Error?) -> Void) -> Void {
         _ = YelpClient.sharedInstance.searchWithTerm(term, offset: nil, limit: nil, sort: sort, categories: categories, deals: deals, completion: completion)
     }
-    
-//    class func searchWithTermWithOffsetAndLimit(term: String, offset: Int?, limit: Int?, sort: YelpSortMode?, categories: [String]?, deals: Bool?, completion: @escaping ([Business]?, Error?) -> Void) -> Void {
-//        _ = YelpClient.sharedInstance.searchWithTerm(term, offset: offset, limit: limit, sort: sort, categories: categories, deals: deals, completion: completion)
-//    }
-
 }

@@ -39,11 +39,11 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BusinessCell" rowHeight="160" id="tAF-qw-e6G" customClass="BusinessTableViewCell" customModule="Yelp" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="BusinessCell" rowHeight="160" id="tAF-qw-e6G" customClass="BusinessTableViewCell" customModule="Yelp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="160"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tAF-qw-e6G" id="B8D-yw-E72">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="159.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="159"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4W7-V7-6gK">
@@ -170,11 +170,53 @@
                         <outlet property="containerView" destination="yPn-sU-Lqb" id="hWA-U5-m9O"/>
                         <outlet property="loadingFooterView" destination="nGG-uF-Wek" id="2Pz-tA-vwA"/>
                         <outlet property="tableView" destination="EhG-kh-cbU" id="lUn-rg-VWc"/>
+                        <segue destination="XTP-ag-zNy" kind="show" identifier="ShowMap" id="f4X-QC-uJW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fgb-4b-F1b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2727.1999999999998" y="357.57121439280365"/>
+        </scene>
+        <!--MAP-->
+        <scene sceneID="cXK-AR-Gwh">
+            <objects>
+                <viewController id="XTP-ag-zNy" customClass="MapViewController" customModule="Yelp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VGu-nx-OZx"/>
+                        <viewControllerLayoutGuide type="bottom" id="LH7-Ya-j9E"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="90e-vu-tyN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4Tq-bC-Fdg">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4Tq-bC-Fdg" firstAttribute="leading" secondItem="90e-vu-tyN" secondAttribute="leading" id="6y4-we-BV2"/>
+                            <constraint firstItem="LH7-Ya-j9E" firstAttribute="top" secondItem="4Tq-bC-Fdg" secondAttribute="bottom" id="Geu-SV-enf"/>
+                            <constraint firstAttribute="trailing" secondItem="4Tq-bC-Fdg" secondAttribute="trailing" id="J99-xE-azf"/>
+                            <constraint firstItem="4Tq-bC-Fdg" firstAttribute="top" secondItem="VGu-nx-OZx" secondAttribute="bottom" id="vfB-sW-czG"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="MAP" id="yZq-BX-z8H">
+                        <barButtonItem key="leftBarButtonItem" image="back-icon" id="jrq-SU-jFJ">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <segue destination="Wcj-mD-o5p" kind="unwind" unwindAction="mapBackBtnTappeWithSegue:" id="m8G-sH-edD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="4Tq-bC-Fdg" id="xBc-P9-tRg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="toS-5T-gGN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Wcj-mD-o5p" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="3464.8000000000002" y="357.57121439280365"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="iT8-wH-l9a">
@@ -195,4 +237,7 @@
             <point key="canvasLocation" x="1788" y="357.57121439280365"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="back-icon" width="30" height="30"/>
+    </resources>
 </document>

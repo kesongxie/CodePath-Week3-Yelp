@@ -9,13 +9,16 @@
 import UIKit
 
 fileprivate let reuseIden = "BusinessCell"
+fileprivate let showMapSegueIden = "ShowMap"
 
 class BusinessesViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var containerView: UIView!
-    var mapBtn: UIBarButtonItem?
+    
+    
+    var mapBtn: UIBarButtonItem!
     
     var businesses: [Business]?
     var searchBar = UISearchBar()
@@ -23,6 +26,12 @@ class BusinessesViewController: UIViewController {
     var searchTerm: String = ""
     
     @IBOutlet weak var loadingFooterView: UIView!
+    
+    @IBAction func mapBackBtnTappe(segue: UIStoryboardSegue){
+    
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
@@ -32,6 +41,10 @@ class BusinessesViewController: UIViewController {
         
         //search bar set up
         self.searchBar.delegate = self
+        //prevent search bar background change after a view controller segue back to this view controller
+        self.searchBar.barTintColor = UIColor.clear
+        self.searchBar.backgroundImage = UIImage()
+        
         self.searchBar.placeholder = "Search for bussiness"
         self.navigationItem.titleView = self.searchBar
         self.searchBar.tintColor = UIColor.black
@@ -74,9 +87,8 @@ class BusinessesViewController: UIViewController {
     }
     
     func setMapBtn(){
-        self.mapBtn = UIBarButtonItem()
-        self.mapBtn?.title = "Map"
-        self.mapBtn?.tintColor = UIColor.black
+        self.mapBtn = UIBarButtonItem(title: "Map", style: .plain, target: self, action: #selector(pushMapSegue(sender:)))
+        self.mapBtn.tintColor = UIColor.black
         self.navigationItem.rightBarButtonItem = self.mapBtn
     }
     
@@ -106,15 +118,26 @@ class BusinessesViewController: UIViewController {
         }
     }
     
-    /*
+    
+    func pushMapSegue(sender: UIBarButtonItem){
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: showMapSegueIden, sender: self)
+        }
+    }
+    
+    
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == showMapSegueIden{
+            if let mapVC = segue.destination as? MapViewController{
+                mapVC.businesses = self.businesses
+            }
+        }
+    }
+
     
 }
 
