@@ -22,7 +22,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- Integrate MapView and Use MkMapView to dsiplay business stores
+- Integrate MapView and Use MkMapView to dsiplay business stores and allow navigation from mapview callout
 
 
 
