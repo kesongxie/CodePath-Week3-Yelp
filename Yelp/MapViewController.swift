@@ -17,15 +17,14 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     
-    var businesses: [Business]?{
-        didSet{
-            self.drawBusinessAnnotations()
-        }
-    }
+    var businesses: [Business]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.mapView.delegate = self
+        if self.businesses != nil{
+             self.drawBusinessAnnotations()
+        }
         
     }
 
